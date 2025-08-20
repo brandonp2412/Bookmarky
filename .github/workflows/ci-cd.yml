@@ -37,7 +37,7 @@ jobs:
         run: npm run lint
 
       - name: Build Angular app
-        run: npm run build -- --configuration production --base-href /bookmarky/
+        run: npm run build -- --configuration production --base-href https://brandonp2412.github.io/Bookmarky/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
