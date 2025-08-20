@@ -1,5 +1,16 @@
 # Bookmarky
 
+Bookmarky is a web application for managing your bookmarks. It allows users to add, view, edit, and delete bookmarks with ease. The application stores bookmarks locally in the browser's `localStorage`, providing a simple and efficient way to keep track of your favorite URLs.
+
+## Features
+
+- **Add Bookmarks**: Easily add new bookmarks with a URL and title.
+- **Edit Bookmarks**: Modify existing bookmark details.
+- **Delete Bookmarks**: Remove unwanted bookmarks.
+- **URL Validation**: Ensures that entered URLs are valid and reachable.
+- **Local Storage**: All bookmarks are saved directly in your browser's `localStorage`, meaning your data persists across sessions without needing a backend server.
+- **Pagination**: Navigate through your bookmarks with a clear pagination system.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.6.
 
 ## Development server
