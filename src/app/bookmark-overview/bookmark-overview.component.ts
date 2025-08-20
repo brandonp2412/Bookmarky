@@ -3,9 +3,9 @@
  * @description Component for displaying the bookmark overview, including a form for adding/editing and a list of bookmarks with pagination.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookmarkService } from '../services/bookmark.service';
 import { Bookmark } from '../models/bookmark.model';
@@ -18,20 +18,20 @@ import { Bookmark } from '../models/bookmark.model';
   styleUrl: './bookmark-overview.scss'
 })
 export class BookmarkOverviewComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private bookmarkService = inject(BookmarkService);
+  router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   bookmarkForm: FormGroup;
   bookmarks: Bookmark[] = [];
-  currentPage: number = 1;
-  itemsPerPage: number = 20;
-  totalPages: number = 0;
+  currentPage = 1;
+  itemsPerPage = 20;
+  totalPages = 0;
   paginatedBookmarks: Bookmark[] = [];
   editingBookmarkId: string | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    private bookmarkService: BookmarkService,
-    public router: Router, // Made public for template access
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.bookmarkForm = this.fb.group({
       url: ['', [Validators.required, this.urlValidator]],
       title: ['', Validators.required]
@@ -53,14 +53,15 @@ export class BookmarkOverviewComponent implements OnInit {
    * @param control The form control for the URL.
    * @returns Validation errors or null if valid.
    */
-  urlValidator(control: any): { [key: string]: any } | null {
+  urlValidator(control: FormControl): Record<string, unknown> | null {
     if (!control.value) {
       return null; // Don't validate empty values, Validators.required handles it
     }
     try {
       new URL(control.value);
       return null;
-    } catch (e) {
+    } catch (e) { 
+      console.error(e);
       return { 'invalidUrl': true };
     }
   }
@@ -130,7 +131,7 @@ export class BookmarkOverviewComponent implements OnInit {
     try {
       // Using fetch with 'no-cors' mode to avoid CORS issues for existence check
       // This will not allow reading the response, but will tell us if the request was made.
-      const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+      await fetch(url, { method: 'HEAD', mode: 'no-cors' });
       // For 'no-cors' mode, response.ok will always be false, but a successful fetch
       // means the URL was reachable. A network error would throw.
       return true;

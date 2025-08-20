@@ -15,7 +15,7 @@ describe('BookmarkOverviewComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            paramMap: of({ get: (key: string) => '123' }) // Mock a paramMap with an ID
+            paramMap: of({ get: (param: string) =>  param }) // Mock a paramMap with an ID
           }
         }
       ]

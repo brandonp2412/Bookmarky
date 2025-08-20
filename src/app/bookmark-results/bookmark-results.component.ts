@@ -3,7 +3,7 @@
  * @description Component for displaying the result of a bookmark submission.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Bookmark } from '../models/bookmark.model';
@@ -16,9 +16,11 @@ import { Bookmark } from '../models/bookmark.model';
   styleUrl: './bookmark-results.scss'
 })
 export class BookmarkResultsComponent implements OnInit {
+  private router = inject(Router);
+
   submittedBookmark: Bookmark | undefined;
 
-  constructor(private router: Router) {
+  constructor() {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.submittedBookmark = navigation.extras.state['newBookmark'];

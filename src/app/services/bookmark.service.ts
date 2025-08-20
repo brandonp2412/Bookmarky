@@ -48,7 +48,7 @@ export class BookmarkService {
    * @returns The updated bookmark, or undefined if not found.
    */
   updateBookmark(updatedBookmark: Bookmark): Bookmark | undefined {
-    let bookmarks = this.getBookmarks();
+    const bookmarks = this.getBookmarks();
     const index = bookmarks.findIndex(b => b.id === updatedBookmark.id);
     if (index > -1) {
       bookmarks[index] = updatedBookmark;
