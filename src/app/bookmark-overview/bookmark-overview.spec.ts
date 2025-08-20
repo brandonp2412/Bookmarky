@@ -1,18 +1,28 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
-import { BookmarkOverview } from './bookmark-overview';
+import { BookmarkOverviewComponent } from './bookmark-overview.component';
 
-describe('BookmarkOverview', () => {
-  let component: BookmarkOverview;
-  let fixture: ComponentFixture<BookmarkOverview>;
+describe('BookmarkOverviewComponent', () => {
+  let component: BookmarkOverviewComponent;
+  let fixture: ComponentFixture<BookmarkOverviewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BookmarkOverview]
+      imports: [BookmarkOverviewComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: of({ get: (key: string) => '123' }) // Mock a paramMap with an ID
+          }
+        }
+      ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BookmarkOverview);
+    fixture = TestBed.createComponent(BookmarkOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

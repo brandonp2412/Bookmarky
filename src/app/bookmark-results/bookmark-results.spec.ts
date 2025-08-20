@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookmarkResults } from './bookmark-results';
+import { BookmarkResultsComponent } from './bookmark-results.component';
 
-describe('BookmarkResults', () => {
-  let component: BookmarkResults;
-  let fixture: ComponentFixture<BookmarkResults>;
+describe('BookmarkResultsComponent', () => {
+  let component: BookmarkResultsComponent;
+  let fixture: ComponentFixture<BookmarkResultsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BookmarkResults]
+      imports: [BookmarkResultsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BookmarkResults);
+    fixture = TestBed.createComponent(BookmarkResultsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
