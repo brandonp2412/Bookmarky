@@ -27,7 +27,7 @@ jobs:
       - name: Run tests
         env:
           CHROME_BIN: ./node_modules/chromium/lib/chromium/chrome-linux/chrome
-        run: npm test -- --no-watch --no-progress --browsers=ChromeHeadless --no-sandbox
+        run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessNoSandbox
 
       - name: Run lint
         run: npm run lint

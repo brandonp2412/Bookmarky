@@ -90,6 +90,12 @@
             "styles": [
               "src/styles.scss"
             ]
+          },
+          "customLaunchers": {
+            "ChromeHeadlessNoSandbox": {
+              "base": "ChromeHeadless",
+              "flags": ["--no-sandbox"]
+            }
           }
         }
       }
