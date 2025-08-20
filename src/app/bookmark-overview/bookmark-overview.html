@@ -1,0 +1,65 @@
+<!--
+  @file bookmark-overview.html
+  @description Template for the Bookmark Overview component.
+  Contains the form for adding/editing bookmarks and the paginated list of bookmarks.
+-->
+<div class="container">
+  <h1>{{ editingBookmarkId ? 'Edit Bookmark' : 'Add New Bookmark' }}</h1>
+
+  <!-- Bookmark Form -->
+  <form [formGroup]="bookmarkForm" (ngSubmit)="onSubmit()" class="bookmark-form">
+    <div class="form-group">
+      <label for="url">URL:</label>
+      <input id="url" type="url" formControlName="url" placeholder="e.g., https://www.example.com">
+      <div *ngIf="bookmarkForm.controls['url'].invalid && bookmarkForm.controls['url'].touched" class="error-message">
+        <div *ngIf="bookmarkForm.controls['url'].errors?.['required']">URL is required.</div>
+        <div *ngIf="bookmarkForm.controls['url'].errors?.['invalidUrl']">Please enter a valid URL.</div>
+        <div *ngIf="bookmarkForm.controls['url'].errors?.['urlNotFound']">URL could not be reached.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input id="title" type="text" formControlName="title" placeholder="e.g., Example Website">
+      <div *ngIf="bookmarkForm.controls['title'].invalid && bookmarkForm.controls['title'].touched" class="error-message">
+        <div *ngIf="bookmarkForm.controls['title'].errors?.['required']">Title is required.</div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="bookmarkForm.invalid">{{ editingBookmarkId ? 'Update Bookmark' : 'Add Bookmark' }}</button>
+    <button type="button" *ngIf="editingBookmarkId" (click)="router.navigate(['/overview'])">Cancel Edit</button>
+  </form>
+
+  <hr>
+
+  <h2>Your Bookmarks</h2>
+
+  <!-- Bookmark List -->
+  <div *ngIf="paginatedBookmarks.length > 0; else noBookmarks">
+    <ul class="bookmark-list">
+      <li *ngFor="let bookmark of paginatedBookmarks" class="bookmark-item">
+        <div class="bookmark-info">
+          <a [href]="bookmark.url" target="_blank" rel="noopener">{{ bookmark.title }}</a>
+          <small>{{ bookmark.url }}</small>
+        </div>
+        <div class="bookmark-actions">
+          <button (click)="editBookmark(bookmark.id)">Edit</button>
+          <button (click)="deleteBookmark(bookmark.id)">Delete</button>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">< Previous</button>
+      <ng-container *ngFor="let page of pageNumbers">
+        <button (click)="goToPage(page)" [class.active]="currentPage === page">{{ page }}</button>
+      </ng-container>
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next ></button>
+    </div>
+  </div>
+
+  <ng-template #noBookmarks>
+    <p class="no-bookmarks-message">No bookmarks added yet. Start by adding one above!</p>
+  </ng-template>
+</div>

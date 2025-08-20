@@ -1,0 +1,19 @@
+<!--
+  @file bookmark-results.html
+  @description Template for the Bookmark Results component.
+  Displays the details of a newly submitted bookmark and provides a link back to the overview.
+-->
+<div class="container">
+  <h1>Bookmark Submitted!</h1>
+
+  <div *ngIf="submittedBookmark" class="submission-details">
+    <p>Thank you for your submission. Here are the details:</p>
+    <p><strong>Title:</strong> {{ submittedBookmark.title }}</p>
+    <p><strong>URL:</strong> <a [href]="submittedBookmark.url" target="_blank" rel="noopener">{{ submittedBookmark.url }}</a></p>
+  </div>
+  <div *ngIf="!submittedBookmark" class="no-submission-message">
+    <p>No bookmark details found. Please submit a bookmark from the <a routerLink="/overview">overview page</a>.</p>
+  </div>
+
+  <button (click)="goToOverview()">Back to Overview</button>
+</div>
