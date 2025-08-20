@@ -25,7 +25,9 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+        env:
+          CHROME_BIN: ./node_modules/chromium/lib/chromium/chrome-linux/chrome
+        run: npm test -- --no-watch --no-progress --browsers=ChromeHeadless
 
       - name: Run lint
         run: npm run lint
